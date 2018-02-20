@@ -43,3 +43,8 @@ See `ipnyb/example.ipynb`
 - Parking meter usage: http://seshat.datasd.org/parking_meters/treas_meters_2016_pole_by_mo_day_datasd.csv
 - Bike paths locations: http://seshat.datasd.org/sde/bike_route/bike_routes_datasd.geojson
 
+# Requirements
+
+- numpy
+- pandas
+- [gmaps](https://github.com/pbugnion/gmaps)
