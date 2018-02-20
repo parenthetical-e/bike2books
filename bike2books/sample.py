@@ -23,6 +23,7 @@ def sample_location(radius=6, prng=None):
     r = prng.uniform(0, radius / 66.9)  # Crude conversion
     theta = prng.uniform(0, 2 * np.pi)
 
+    # Convert to cartesian
     x = r * np.cos(theta)
     y = r * np.sin(theta)
 
