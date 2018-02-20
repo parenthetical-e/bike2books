@@ -2,13 +2,22 @@
 
 The City of San Diego is investing in substantial improvements in biking [infrastructure](https://www.sandiego.gov/sites/default/files/legacy/planning/programs/transportation/mobility/pdf/bicycle_master_plan_final_dec_2013.pdf). A long-term effort like this can be difficult to explain to the community in way they find intuitive and meaningful....
 
-The `bike2books` project provides a simple and meaningful metric of a neighborhood's bike-a-bility: _how long does it take to bike safely to your nearest library?_ 
+The `bike2books` project provides a simple and meaningful metric of a neighborhood's bike-a-bility: _on average how long does it take to bike safely to your nearest library?_ 
 
 Libraries are often centrally located in their neighborhoods, they are familiar landmarks, and are used by a wide range of community members. The main idea here is that if someone feels comfortable biking to their library, they should feel comfortable biking elsewhere in their neighborhood. This is not a complete measure - it may not be good metric for commuting - but may be useful in helping San Diego develop a bike friendly brand.
 
-This Python module includes *the beginning* of a tool set for re-sampling based statistical simulations to analyze the bike "bike-a-bility" of each neighborhood in San Diego.
+This Python module includes *the beginning* of a tool set for re-sampling based statistical simulations to analyze the bike "bike-a-bility" of each neighborhood in San Diego. The key idea is to develop a good estimate of average travel time to a library, using a data-driven re-sampling approach (i.e. bootsrapping). 
 
-## Key details
+### In summary:
+
+- A "trip" starts at random point in a neighborhood. 
+- The model then estimates the travel time from that point to the closest library, by bike and car. 
+- Bike trips are penalized for safety (see next section).
+- Car trips have a parking penalty (see next section).
+- The average bike travel time for `N` simulated trips is the bike-a-bility score. Smaller is better.
+- When the bike-a-bility score falls below the car travel time, biking can be considered a better choice for efficient safe mobility.
+
+### Key details
 
 - Bike travel time is penalized when the route does not *easily* include a bike lane or path. This penalty may not reflect the actual travel time, but for biking to become popular it needs to be seen as safe. Providing several measures of bike-a-bility (e.g. one for time, one for safety) can make understanding and quantifying progress difficult. By converting safety (as measure by bike lane availability) into units of time, we can introduce a single bike-a-bility metric. One that lends itself to comparison with other ways of getting around, and is easily understood. 
 
