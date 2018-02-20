@@ -6,7 +6,7 @@ The `bike2books` project provides a simple and meaningful metric of a neighborho
 
 Libraries are often centrally located in their neighborhoods, they are familiar landmarks, and are used by a wide range of community members. The main idea here is that if someone feels comfortable biking to their library, they should feel comfortable biking elsewhere in their neighborhood. This is not a complete measure - it may not be good metric for commuting - but may be useful in helping San Diego develop a bike friendly brand.
 
-This Python module includes *the beginning* of a tool set for re-sampling based statistical simulations to analyze the bike "bike-a-bility" of each neighborhood in San Diego. The key idea is to develop a good estimate of average travel time to a library, using a data-driven re-sampling approach (i.e. bootsrapping). 
+This Python module includes *the beginning* of a tool set for re-sampling based statistical simulations to analyze the bike "bike-a-bility" of each neighborhood in San Diego. The key idea is to develop a good estimate of average travel time to a library, using a data-driven re-sampling approach (i.e. bootstrapping). 
 
 ### In summary:
 
