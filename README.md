@@ -48,3 +48,4 @@ See `ipnyb/example.ipynb`
 - numpy
 - pandas
 - [gmaps](https://github.com/pbugnion/gmaps)
+- geojson
