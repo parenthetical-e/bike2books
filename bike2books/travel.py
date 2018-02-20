@@ -43,17 +43,20 @@ def _get_data():
 
 
 def neighborhood_location(name):
+    """Return the (lat, long) of a neighborhoods center."""
+
     nns = neighborhoods()
     return nns[name]
 
 
 def neighborhood_names():
+    """Return the all neighborhood's names."""
     nns = neighborhoods()
     return nns.keys()
 
 
 def neighborhoods():
-    """Neighborhood names and centers.
+    """Neighborhood names and centers (lat, long).
 
     Note: Names take from from the Parking meter data at:
     http://seshat.datasd.org/parking_meters/treas_parking_meters_loc_datasd.csv
