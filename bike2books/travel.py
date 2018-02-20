@@ -140,6 +140,7 @@ def nearest_library(location):
     location_point = Point(location)
 
     # Load
+    data_path = _get_dat_path()
     library_data = gpd.read_file(
         os.path.join(data_path, "libraries_datasd.geojson"))
     library_points = library_data["geometry"]
