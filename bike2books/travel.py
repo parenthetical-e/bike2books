@@ -167,7 +167,7 @@ def nearest_library(location):
     return name, d
 
 
-def bike_time(start, finish, penalty=10, speed=9.6):
+def bike_time(start, finish, max_penalty=10, speed=9.6):
     """Estimate biking time from two sets of (lat, long)
     coordinates. 
 
@@ -179,7 +179,7 @@ def bike_time(start, finish, penalty=10, speed=9.6):
         Stating (lon, lat) coordinates
     stop : 2-tuple
         Stating (lon, lat) coordinates
-    penalty : numeric
+    max_penalty : numeric
         Penalty time (minutes)
     speed : numeric
         Avg. speed (MPH) [Default of 9.6 from Wikipedia]
@@ -197,8 +197,13 @@ def bike_time(start, finish, penalty=10, speed=9.6):
     d = distance_in_miles(start, finish)
 
     # Find closest bike lane to the start.
+    # (...For now this is random)
+    penalty = np.random.uniform(0, max_penalty)
 
     # Is it close enough to avoid a penalty?
+    # (...For now this is a coin toss)
+    if np.random.rand() > 0.5:
+        d += penalty
 
     return d / speed
 
@@ -235,10 +240,11 @@ def drive_time(start, finish, speed=25, min_time=2, max_time=30):
     d = distance_in_miles(start, finish)
 
     # Lookup all parking data to get the range of value
-
     # Find the closest meter to the finish
-
     # Interpolate parking time using the range and min/max times, 
     # and the closest meter.
+    # (...For now this is random)
+    penalty = np.random.uniform(min_time, max_time)
+    d += penalty
 
     return d / speed
