@@ -53,6 +53,14 @@ _get_data()  # Lazy. Only runs if the data is not present...
 # ------------------------------------------------------------
 
 
+def point2tuple(point):
+    return tuple(point.coords)[0]
+
+
+def tuple2point(tup):
+    return Point(tup)
+
+
 def neighborhood_location(name, as_geo=False):
     """Return the (lat, long) of a neighborhoods center."""
 
@@ -73,7 +81,7 @@ def neighborhood_names():
 
 
 def neighborhoods(as_geo=False):
-    """Neighborhood names and centers (lat, long).
+    """Neighborhood names and centers (lon, lat).
 
     Note: Names take from from the Parking meter data at:
     http://seshat.datasd.org/parking_meters/treas_parking_meters_loc_datasd.csv
@@ -164,7 +172,7 @@ def nearest_library(location):
     closest = library_points[i]
 
     # Convert smallest point to a tuple ...(kluge?)
-    closest = tuple(p.coords)[0]
+    closest = point2tuple(closest)
 
     # How far?
     d = distance_in_miles(location, closest)
