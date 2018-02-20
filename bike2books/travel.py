@@ -128,6 +128,13 @@ def distance_in_miles(x, y):
     return vincenty(x, y).miles
 
 
+def get_library_data_path():
+    data_path = _get_dat_path()
+    path = os.path.join(data_path, "libraries_datasd.geojson")
+
+    return path
+
+
 def nearest_library(location):
     """Locate nearest library, in miles.
     
@@ -140,10 +147,8 @@ def nearest_library(location):
     location_point = Point(location)
 
     # Load
-    data_path = _get_dat_path()
-
-    library_data = gpd.read_file(
-        os.path.join(data_path, "libraries_datasd.geojson"))
+    path = get_library_data_path()
+    library_data = gpd.read_file(path)
 
     library_points = library_data["geometry"]
 
