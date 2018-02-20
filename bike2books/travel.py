@@ -140,7 +140,8 @@ def nearest_library(location):
     location_point = Point(location)
 
     # Load
-    library_data = gpd.read_file("data/libraries_datasd.geojson")
+    library_data = gpd.read_file(
+        os.path.join(data_path, "libraries_datasd.geojson"))
     library_points = library_data["geometry"]
 
     # Measure (unitless) distances
