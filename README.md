@@ -4,7 +4,7 @@ The City of San Diego is investing in substantial improvements in biking [infras
 
 The `bike2books` project provides a simple and meaningful metric of a neighborhood's bike-a-bility: _how long does it take to bike safely to your nearest library?_ 
 
-Libraries are often centrally located in their neighborhoods, they are familiar landmarks, and are used by a wide range of community members. The main idea here is that if someone feels comfortable biking to their library, they should feel comfortable biking elsewhere in their neighborhood. This is not a complete measure - it may not be good metric for commuting - but may be useful in helping San Diego developing a bike friendly brand.
+Libraries are often centrally located in their neighborhoods, they are familiar landmarks, and are used by a wide range of community members. The main idea here is that if someone feels comfortable biking to their library, they should feel comfortable biking elsewhere in their neighborhood. This is not a complete measure - it may not be good metric for commuting - but may be useful in helping San Diego develop a bike friendly brand.
 
 This Python module includes *the beginning* of a tool set for re-sampling based statistical simulations to analyze the bike "bike-a-bility" of each neighborhood in San Diego.
 
@@ -18,7 +18,7 @@ This Python module includes *the beginning* of a tool set for re-sampling based 
 
 # Installation
 
-`git clone ...` into a working directory.
+`git clone https://github.com/parenthetical-e/bike2books` into a working directory.
 
 On the command line, move into that directory then into the top-level `bike2books` directory. From there type, `pip install -e .`
 
