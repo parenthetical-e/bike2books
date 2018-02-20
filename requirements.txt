@@ -1,5 +1,8 @@
-geojson>=2.3.0
-setuptools>=38.2.5
-pandas>=0.19.2
-gmaps>=0.7.2
+Shapely==1.6.4.post1
+bike2books.egg==info
+geopandas==0.3.0
+geopy==1.11.0
 numpy==1.14.0
+geojson==2.3.0
+pandas==0.19.2
+gmaps==0.7.2
