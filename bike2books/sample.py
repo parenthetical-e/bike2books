@@ -1,4 +1,40 @@
 import numpy as np
+import pandas as pd
+import geopandas as gpd
+
+from shapely.geometry import Point
+
+
+def trips(N, center, radius=6, prng=None, as_geo=False):
+    """Simulate N trips.
+
+    Parameters
+    ---------
+    N : numeric
+        Number of trips
+    center : 2-tuple
+        Stating (Lat, Long) coordinates
+    radius : numeric
+        Radius of neighborhoods to sample (in miles).
+    as_geo : Bool
+        If True, return a GeoDataFrame
+    prng : None, np.random.RandomState
+        Control random seeding in a sensible way.
+    """
+
+    samples = []
+    for i in range(N):
+        d = sample_location(center, radius, prng=prng)
+        samples.append((i, d[0], d[1]))
+
+    if as_geo:
+        data = pd.DataFrame(samples, columns=["location", "lon", "lat"])
+        geometry = [Point(xy) for xy in zip(data.lon, data.lat)]
+        data = data.drop(['lon', 'lat'], axis=1)
+        crs = {'init': 'epsg:4326'}
+        samples = gpd.GeoDataFrame(data, crs=crs, geometry=geometry)
+
+    return samples
 
 
 def sample_location(center, radius=6, prng=None):
