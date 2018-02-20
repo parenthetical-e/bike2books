@@ -2,7 +2,11 @@ import os
 import urllib
 import geojson
 import bike2books
+import numpy as np
 import pandas as pd
+import geopandas as gpd
+from shapely.geometry import Point
+from geopy.distance import vincenty
 
 
 def _get_dat_path():
@@ -42,20 +46,33 @@ def _get_data():
         urllib.urlretrieve(url, file_name)
 
 
-def neighborhood_location(name):
+# ------------------------------------------------------------
+# RUN ON IMPORT OF TRAVEL
+_get_data()  # Lazy. Only runs if the data is not present...
+
+# ------------------------------------------------------------
+
+
+def neighborhood_location(name, as_geo=False):
     """Return the (lat, long) of a neighborhoods center."""
 
     nns = neighborhoods()
-    return nns[name]
+
+    loc = nns[name]
+    if as_geo:
+        loc = Point(loc)
+
+    return loc
 
 
 def neighborhood_names():
     """Return the all neighborhood's names."""
+
     nns = neighborhoods()
     return nns.keys()
 
 
-def neighborhoods():
+def neighborhoods(as_geo=False):
     """Neighborhood names and centers (lat, long).
 
     Note: Names take from from the Parking meter data at:
@@ -65,26 +82,50 @@ def neighborhoods():
     (This should be automated in the future).
     """
 
-    return {
-        'Barrio Logan': (32.697539, -117.142025),
-        'Midtown': (32.738611, -117.175278),
-        'Mission Beach': (32.775034, -117.251903),
-        'Mission Hills': (32.752828, -117.186361),
-        'Point Loma': (32.67, -117.241944),
-        'Core - Columbia': (32.716678, -117.168244),
-        'Cortez Hill': (32.721667, -117.16),
-        'East Village': (32.724167, -117.167222),
-        'Gaslamp': (32.711667, -117.159167),
-        'Little Italy': (32.724167, -117.167222),
-        'Marina': (32.711667, -117.169167),
-        'Golden Hill': (32.718, -117.134),
-        'North Park': (32.740831, -117.129719),
-        'Talmadge': (32.764, -117.09),
-        'University Heights': (32.76, -117.14),
-        'Bankers Hill': (32.731, -117.164),
-        'Five Points': (32.7431, -117.1848),
-        'Hillcrest': (32.75, -117.166667)
+    data = {
+        'Barrio Logan': (-117.142025, 32.697539),
+        'Midtown': (-117.175278, 32.738611),
+        'Mission Beach': (-117.251903, 32.775034),
+        'Mission Hills': (-117.186361, 32.752828),
+        'Point Loma': (-117.241944, 32.67),
+        'Core - Columbia': (-117.168244, 32.716678),
+        'Cortez Hill': (-117.16, 32.721667),
+        'East Village': (-117.167222, 32.724167),
+        'Gaslamp': (-117.159167, 32.711667),
+        'Little Italy': (-117.167222, 32.724167),
+        'Marina': (-117.169167, 32.711667),
+        'Golden Hill': (-117.134, 32.718),
+        'North Park': (-117.129719, 32.740831),
+        'Talmadge': (-117.09, 32.764),
+        'University Heights': (-117.14, 32.76),
+        'Bankers Hill': (-117.164, 32.731),
+        'Five Points': (-117.1848, 32.7431),
+        'Hillcrest': (-117.166667, 32.75)
     }
+
+    if as_geo:
+        # To DF
+        data = [(k, v[0], v[1]) for k, v in data.items()]
+        data = pd.DataFrame(data, columns=["location", "lon", "lat"])
+
+        # ...To GeoDF
+        geometry = [Point(xy) for xy in zip(data.lon, data.lat)]
+        data = data.drop(['lon', 'lat'], axis=1)
+        crs = {'init': 'epsg:4326'}
+        data = gpd.GeoDataFrame(data, crs=crs, geometry=geometry)
+
+    return data
+
+
+def distance_in_miles(x, y):
+    """Return distance between two points
+    x : 2-tuple
+        First (lon, lat) coordinate
+    y : 2-tuple
+        Second (lon, lat) coordinate
+    """
+
+    return vincenty(x, y).miles
 
 
 def nearest_library(location):
@@ -93,15 +134,36 @@ def nearest_library(location):
     Parameters
     ----------
     location : 2-tuple
-        (Lat, Long) coordinates
+        (lon, lat) coordinates
     """
 
-    _get_data()  # Lazy. Only runs if the data is not present...
+    location_point = Point(location)
 
-    pass
+    # Load
+    library_data = gpd.read_file("data/libraries_datasd.geojson")
+    library_points = library_data["geometry"]
+
+    # Measure (unitless) distances
+    distances = []
+    for p in library_points:
+        distances.append(location_point.distance(p))
+
+    # Find the smallest distance
+    i = np.argmin(distances)
+
+    name = library_data["name"][i]
+    closest = library_points[i]
+
+    # Convert smallest point to a tuple ...(kluge?)
+    closest = tuple(p.coords)[0]
+
+    # How far?
+    d = distance_in_miles(location, closest)
+
+    return name, d
 
 
-def bike_time(start, finish, penalty=10):
+def bike_time(start, finish, penalty=10, speed=9.6):
     """Estimate biking time from two sets of (lat, long)
     coordinates. 
 
@@ -110,16 +172,23 @@ def bike_time(start, finish, penalty=10):
     Parameters
     ----------
     state : 2-tuple
-        Stating (Lat, Long) coordinates
+        Stating (lon, lat) coordinates
     stop : 2-tuple
-        Stating (Lat, Long) coordinates
+        Stating (lon, lat) coordinates
     penalty : numeric
-        Penalty time
+        Penalty time (minutes)
+    speed : numeric
+        Avg. speed (MPH) [Default of 9.6 from Wikipedia]
     """
 
-    _get_data()  # Lazy. Only runs if the data is not present...
+    # Get raw distance
+    d = distance_in_miles(start, finish)
 
-    pass
+    # Find closest bike lane to the start.
+
+    # Is it close enough to avoid a penalty?
+
+    return d / speed
 
 
 def drive_time(start, finish, min_time=2, max_time=30):
@@ -132,9 +201,9 @@ def drive_time(start, finish, min_time=2, max_time=30):
     Parameters
     ----------
     state : 2-tuple
-        Stating (Lat, Long) coordinates
+        Stating (lon, lat) coordinates
     stop : 2-tuple
-        Stating (Lat, Long) coordinates
+        Stating (lon, lat) coordinates
     min_time : numeric
         Minumum parking time (minutes)
     max_time : numeric
