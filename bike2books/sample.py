@@ -1,14 +1,13 @@
 import numpy as np
 
-# City center
-CENTER = (32.7157, 117.1611)
 
-
-def sample_location(radius=6, prng=None):
+def sample_location(center, radius=6, prng=None):
     """Draw a sample, starting from the city center.
     
     Parameters
     ---------
+    center : 2-tuple
+        Stating (Lat, Long) coordinates
     radius : numeric
         Radius of neighborhoods to sample (in miles).
     prng : None, np.random.RandomState
@@ -27,4 +26,4 @@ def sample_location(radius=6, prng=None):
     x = r * np.cos(theta)
     y = r * np.sin(theta)
 
-    return (CENTER[0] + x, CENTER[1] + y)
+    return (center[0] + x, center[1] + y)
