@@ -70,7 +70,7 @@ def bike_time(start, finish, penalty=10):
     pass
 
 
-def drive_time(start, finish):
+def drive_time(start, finish, min_time=2, max_time=30):
     """Estimate drive time from two sets of (lat, long)
     coordinates. 
     
@@ -83,6 +83,10 @@ def drive_time(start, finish):
         Stating (Lat, Long) coordinates
     stop : 2-tuple
         Stating (Lat, Long) coordinates
+    min_time : numeric
+        Minumum parking time (minutes)
+    max_time : numeric
+        Maximum parking time (minutes)
     """
 
     _get_data()  # Lazy. Only runs if the data is not present...
