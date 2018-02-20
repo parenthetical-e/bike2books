@@ -1,6 +1,6 @@
 # bike2books
 
-The City of San Diego is investing in substantial improvements in biking [infrastructure](https://www.sandiego.gov/sites/default/files/legacy/planning/programs/transportation/mobility/pdf/bicycle_master_plan_final_dec_2013.pdf). Such complex a and long-term effort can be difficult to explain to the community in way they find intuitive and meaningful....
+The City of San Diego is investing in substantial improvements in biking [infrastructure](https://www.sandiego.gov/sites/default/files/legacy/planning/programs/transportation/mobility/pdf/bicycle_master_plan_final_dec_2013.pdf). A long-term effort like this can be difficult to explain to the community in way they find intuitive and meaningful....
 
 The `bike2books` project provides a simple and meaningful metric of a neighborhood's bike-a-bility: _how long does it take to bike safely to your nearest library?_ 
 
