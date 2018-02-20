@@ -179,6 +179,14 @@ def bike_time(start, finish, penalty=10, speed=9.6):
         Penalty time (minutes)
     speed : numeric
         Avg. speed (MPH) [Default of 9.6 from Wikipedia]
+
+    Note:
+    ---
+    The safety penalty is a total kluge to ge this working. It simply checks 
+    if there is any single bike lane near the start point. 
+    
+    A correct/better approach would be to use google to plot a route 
+    and examine how much of that is on a bike lane, or some similar thing.
     """
 
     # Get raw distance
@@ -191,7 +199,7 @@ def bike_time(start, finish, penalty=10, speed=9.6):
     return d / speed
 
 
-def drive_time(start, finish, min_time=2, max_time=30):
+def drive_time(start, finish, speed=25, min_time=2, max_time=30):
     """Estimate drive time from two sets of (lat, long)
     coordinates. 
     
@@ -204,12 +212,29 @@ def drive_time(start, finish, min_time=2, max_time=30):
         Stating (lon, lat) coordinates
     stop : 2-tuple
         Stating (lon, lat) coordinates
+    speed : numeric
+        Avg. speed (MPH)
     min_time : numeric
         Minumum parking time (minutes)
     max_time : numeric
         Maximum parking time (minutes)
+    
+    Note:
+    ----
+    The method used for the parking penalty is a total kluge to
+    get this working. A better/correct model would examine raw
+    parking times and develop good spatial distribution
+    of parking availability from that data. 
     """
 
-    _get_data()  # Lazy. Only runs if the data is not present...
+    # Get raw distance
+    d = distance_in_miles(start, finish)
 
-    pass
+    # Lookup all parking data to get the range of value
+
+    # Find the closest meter to the finish
+
+    # Interpolate parking time using the range and min/max times, 
+    # and the closest meter.
+
+    return d / speed
