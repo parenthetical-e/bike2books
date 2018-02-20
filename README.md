@@ -4,9 +4,13 @@ The City of San Diego is investing in substantial improvements in biking [infras
 
 The `bike2books` project provides a simple and meaningful metric of a neighborhood's bike-a-bility: _on average how long does it take to bike safely to your nearest library?_ 
 
-Libraries are often centrally located in their neighborhoods, they are familiar landmarks, and are used by a wide range of the community. If someone feels comfortable biking to their library, they should feel comfortable biking elsewhere in their neighborhood. At least that's the idea. 
+- Libraries are often centrally located in their neighborhoods, they are familiar landmarks, and are used by a wide range of the community. If someone feels comfortable biking to their library, they should feel comfortable biking elsewhere in their neighborhood. At least that's the idea. 
 
-This is not a complete measure of course. It may not be good metric for commuting, for example. That said, a metric like this might be helpful in San Diego developing a bike friendly brand.
+- This is not a complete measure of course. It may not be good metric for commuting, for example. That said, a metric like this might be helpful in San Diego developing a bike friendly brand.
+
+- `bike2books` may also be a useful metric in thinking about where to add bicycle infrastructure. The Bike Master Plan focus on both lager between neighborhood connections (which are important), and local 'choke points'. This tool provides one way to estimate those changes impact on a measure of overall bike-a-bility. 
+
+- The idea I'm exploring is really that if people are to bike more, they should be comfortable biking near their homes. If this intuition in countered by exiting data, and citizen input, it would need revision or replacement.
 
 ---
 
