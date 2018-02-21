@@ -43,7 +43,7 @@ On the command line, move into that directory then into the top-level `bike2book
 
 # Usage
 
-See `ipnyb/example.ipynb`
+See `ipnyb/API_usage.ipynb`
 
 
 # Data
