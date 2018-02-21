@@ -61,6 +61,10 @@ def tuple2point(tup):
     return Point(tup)
 
 
+def flip_coords(tup):
+    return tup[1], tup[0]
+
+
 def neighborhood_location(name, as_geo=False):
     """Return the (lat, long) of a neighborhoods center."""
 
@@ -177,10 +181,10 @@ def nearest_library(location):
     # How far?
     d = distance_in_miles(location, closest)
 
-    return name, d
+    return name, d, closest
 
 
-def bike_time(start, finish, max_penalty=10, speed=9.6):
+def bike_time(start, finish, max_penalty=10, speed=9.6, p=0.5):
     """Estimate biking time from two sets of (lat, long)
     coordinates. 
 
@@ -215,7 +219,7 @@ def bike_time(start, finish, max_penalty=10, speed=9.6):
 
     # Is it close enough to avoid a penalty?
     # (...For now this is a coin toss)
-    if np.random.rand() > 0.5:
+    if np.random.rand() > p:
         d += penalty
 
     return d / speed
